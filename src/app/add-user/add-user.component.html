@@ -1,0 +1,119 @@
+
+
+<form (ngSubmit)="saveUser(refUserForm)" #myForm="ngForm" #refUserForm>
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>name</mat-label>
+      <input matInput placeholder="name"  required   name="name"  pattern="[A-Za-zא-ת]+"  [(ngModel)]="service.user.name" #name='ngModel'>
+    </mat-form-field>
+    <p class="pDiv"  *ngIf="name.touched&&name.errors?.['required']">name is required.</p>  
+      <p class="pDiv" *ngIf="name.touched&&name.errors?.['pattern']">name includs only letters</p> 
+  </div>
+
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>family name</mat-label>
+      <input matInput placeholder="family name"  required   required name="familyName" pattern="[A-Za-zא-ת]+" [(ngModel)]="service.user.familyName" #familyName='ngModel'>
+      
+    </mat-form-field>
+    <p class="pDiv" *ngIf="familyName.touched&&familyName.errors?.['required']">family name is required.</p>  
+      <p class="pDiv" *ngIf="familyName.touched&&familyName.errors?.['pattern']">family Name includs only letters</p>  
+  </div>
+
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>TZ</mat-label>
+      <input matInput placeholder="TZ" required minlength="9" maxlength="9" pattern="[0-9]+" name="TZ" [(ngModel)]="service.user.tz" #TZ='ngModel'>
+    
+    </mat-form-field>
+    <div class="pDiv" *ngIf="TZ.touched&&TZ.errors?.minlength||TZ.errors?.maxlength" class="error">TZ includs 9 numbers</div>
+    <div class="pDiv" *ngIf="TZ.touched&&TZ.errors?.pattern" class="error">TZ includs only numbers</div>
+    <div class="pDiv" *ngIf="TZ.touched&&TZ.errors?.required" class="error">TZ is required.</div> 
+  </div>
+
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>DOB</mat-label>
+      <input matInput type="date"  placeholder="date of birth" required="required" name="DOB" max="{{today}}" [(ngModel)]="service.user.dob" #DOB='ngModel'>
+    </mat-form-field>
+    <p class="pDiv" *ngIf="DOB.touched&&DOB.errors?.['required']">DOB is required.</p>  
+    <p class="pDiv" *ngIf="DOB.touched&&DOB.errors?.max">DOB is required.</p>  
+
+  </div>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>gender</mat-label>
+    <mat-select required="required" name="gender" [(ngModel)]="service.user.gender" #gender='ngModel'>
+      <mat-option value="0">male</mat-option>
+      <mat-option value="1">female</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p class="pDiv" *ngIf="gender.touched&&gender.errors?.['required']">gender is required.</p>  
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>HMO</mat-label>
+    <mat-select required="required" name="HMO" [(ngModel)]="service.user.hmo" #HMO='ngModel'>
+      <mat-option value="0">maccabi</mat-option>
+      <mat-option value="1">meuchedet</mat-option>
+      <mat-option value="2">clallit</mat-option>
+      <mat-option value="3">leumit</mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+  <p class="pDiv" *ngIf="HMO.touched&&HMO.errors?.['required']">HMO is required.</p>  
+
+  <button mat-raised-button  *ngIf="!isAddingChild"(click)="addChild()">add child</button>
+
+  <label *ngIf="isAddingChild==true">child details:</label>
+
+  
+
+
+<form *ngIf="isAddingChild==true" (ngSubmit)="saveChild(refForm)" #childForm="ngForm" #refForm>
+
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>name</mat-label>
+      <input matInput type="text" placeholder="name" required="required" name="name" [(ngModel)]="service.child.name" required="required" pattern="[A-Za-zא-ת]+"  #childname='ngModel'>
+    </mat-form-field>
+    <p class="pDiv" *ngIf="childname.touched&&childname.errors?.['required']">name is required.</p>  
+    <p class="pDiv" *ngIf="childname.touched&&childname.errors?.['pattern']">name includs only letters</p>  
+  </div>
+
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>TZ</mat-label>
+      <input matInput type="text"  placeholder="TZ" required="required" name="TZ" [(ngModel)]="service.child.tz" required minlength="9" maxlength="9" pattern="[0-9]+"  #childTZ='ngModel'>
+    </mat-form-field>
+    <div class="pDiv" *ngIf="childTZ.touched&&childTZ.errors?.minlength||childTZ.errors?.maxlength" class="error">TZ includs 9 numbers</div>
+    <div class="pDiv" *ngIf="childTZ.touched&&childTZ.errors?.pattern" class="error">TZ includs only numbers</div>
+    <div class="pDiv" *ngIf="childTZ.touched&&childTZ.errors?.required" class="error">TZ is required.</div>
+  </div>
+
+  <div class="example-container">
+    <mat-form-field appearance="fill">
+      <mat-label>DOB</mat-label>
+      <input matInput type="date"  placeholder="date of birth" required="required" name="DOB" [(ngModel)]="service.child.dob" max="{{today}}" required="required" #childDOB='ngModel'>
+      <div class="pDiv" *ngIf="childDOB.touched&&childDOB.errors?.required" class="error">DOB is required.</div>
+      <div class="pDiv" *ngIf="childDOB.touched&&childDOB.errors?.max" class="error">inValid date.</div>
+    </mat-form-field>
+
+  </div>
+
+  <button mat-raised-button   type="submit" [disabled]="childForm.invalid" >save child</button>
+
+</form>
+<button mat-raised-button  type="submit" [disabled]="myForm.invalid">save user</button>
+
+</form >
+<button mat-raised-button  (click)="guidlines()">guidlines</button>
+<!-- <button mat-raised-button  (click)="getAllUser()">getAll</button> -->

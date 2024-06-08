@@ -1,0 +1,25 @@
+form{
+    display: inline-flex;
+    flex-direction: column;
+}
+input{
+    margin: 5%;
+    margin-bottom: 0%;
+}
+button{
+    margin: 5%;
+    margin-bottom: 0%;
+}
+label{
+    margin: 5%;
+}
+.pDiv{
+   size: 4px;
+    color: red;
+    padding: 0%;
+    margin: 0%;
+    
+}
+.example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
